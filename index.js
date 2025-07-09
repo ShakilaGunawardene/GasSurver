@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const SalesAgentRoutes = require('./routes/SalesAgentRoutes');
+const CustomerRoutes = require('./routes/CustomerRoutes')
 //const cors = require('cors');
 require('dotenv').config();
 
@@ -29,3 +30,4 @@ mongoose.connect(process.env.MONGO_URI, {
 
 //Routes:
 app.use('/SalesAgent/', SalesAgentRoutes);
+app.use('/Customer/', CustomerRoutes);
