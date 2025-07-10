@@ -4,9 +4,9 @@ const {registerSalesAgent, getAllSalesAgent, getSalesAgentById, updateSalesAgent
 
 //Route:
 router.post('/register',registerSalesAgent);
-router.get('/getAllUsers',getAllSalesAgent);
-router.get('/getUserById',getSalesAgentById);
-router.put('/updateUser',updateSalesAgent);
-router.delete('/deleteUser',deleteSalesAgent);
+router.get('/getAllSalesAgent',getAllSalesAgent);
+router.get('/getSalesAgentById/:id',getSalesAgentById);
+router.put('/updateSalesAgent/:id',updateSalesAgent);
+router.delete('/deleteSalesAgent/:id',deleteSalesAgent);
 
 module.exports = router;
