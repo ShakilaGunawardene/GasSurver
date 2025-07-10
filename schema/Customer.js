@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const SalesAgent = new mongoose.Schema({
+const Customer = new mongoose.Schema({
   customerId: { type: String },
   customerName: { type: String, required: true },
   customerAddress:{ type: String, required: true },
