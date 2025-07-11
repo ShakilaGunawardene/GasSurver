@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const SalesAgentRoutes = require('./routes/SalesAgentRoutes');
-const CustomerRoutes = require('./routes/CustomerRoutes')
-const AdminRoutes = require('./routes/AdminRoutes')
+const CustomerRoutes = require('./routes/CustomerRoutes');
+const AdminRoutes = require('./routes/AdminRoutes');
+const GasStockRoutes = require('./routes/GasStockRoutes');
 //const cors = require('cors');
 require('dotenv').config();
 
@@ -33,3 +34,4 @@ mongoose.connect(process.env.MONGO_URI, {
 app.use('/SalesAgent/', SalesAgentRoutes);
 app.use('/Customer/', CustomerRoutes);
 app.use('/Admin/', AdminRoutes);
+app.use('/GasStock/', GasStockRoutes);
