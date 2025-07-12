@@ -4,6 +4,9 @@ const SalesAgentRoutes = require('./routes/SalesAgentRoutes');
 const CustomerRoutes = require('./routes/CustomerRoutes');
 const AdminRoutes = require('./routes/AdminRoutes');
 const GasStockRoutes = require('./routes/GasStockRoutes');
+const DiliveryRoutes = require('./routes/DiliveryRoutes');
+const AuthRoutes = require('./routes/AuthRoutes');
+
 //const cors = require('cors');
 require('dotenv').config();
 
@@ -35,3 +38,5 @@ app.use('/SalesAgent/', SalesAgentRoutes);
 app.use('/Customer/', CustomerRoutes);
 app.use('/Admin/', AdminRoutes);
 app.use('/GasStock/', GasStockRoutes);
+app.use('/Dilivery/', DiliveryRoutes);
+app.use('/Auth/', AuthRoutes);

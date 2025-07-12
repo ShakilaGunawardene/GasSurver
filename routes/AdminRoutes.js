@@ -1,4 +1,5 @@
 const express = require('express');
+const { protect } = require('../Security/VerifyToken');
 const router = express.Router();
 const {
   registerAdmin,
@@ -8,10 +9,11 @@ const {
   deleteAdmin
 } = require("../controller/AdminController");
 
-router.post('/register', registerAdmin);
-router.get('/getAllAdmins', getAllAdmins);
-router.get('/getAdminById/:id', getAdminById);
-router.put('/updateAdmin/:id', updateAdmin);
-router.delete('/deleteAdmin/:id', deleteAdmin);
-
+router.post('/register',protect(['admin']), registerAdmin);
+router.get('/getAllAdmins',protect(['admin']), getAllAdmins);
+router.get('/getAdminById/:id',protect(['admin']), getAdminById);
+router.put('/updateAdmin/:id',protect(['admin']), updateAdmin);
+router.delete('/deleteAdmin/:id',protect(['admin']), deleteAdmin);
 module.exports = router;
+
+

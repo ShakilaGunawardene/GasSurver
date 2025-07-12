@@ -1,19 +1,35 @@
 const Admin = require('../schema/Admin');
 
 // Create Admin
+const bcrypt = require('bcryptjs');
+
+
 const registerAdmin = async (req, res) => {
   const { adminId, adminName, adminEmail, adminPassword } = req.body;
+
   try {
     const exists = await Admin.findOne({ adminEmail });
     if (exists) return res.status(400).json({ message: 'Admin already exists' });
 
-    const admin = new Admin({ adminId, adminName, adminEmail, adminPassword });
+    // Hash password
+    const hashedPassword = await bcrypt.hash(adminPassword, 10);
+
+    // Create new admin with hashed password
+    const admin = new Admin({
+      adminId,
+      adminName,
+      adminEmail,
+      adminPassword: hashedPassword,
+    });
+
     await admin.save();
     res.status(201).json({ message: 'Admin registered', admin });
   } catch (err) {
     res.status(500).json({ message: 'Error', error: err.message });
   }
 };
+
+
 
 // Read all Admins
 const getAllAdmins = async (req, res) => {
@@ -38,11 +54,11 @@ const getAdminById = async (req, res) => {
 
 // Update Admin
 const updateAdmin = async (req, res) => {
-  const { adminId, adminName, adminEmail, adminPassword } = req.body;
+  const { adminId, adminName, email, password } = req.body;
   try {
     const updated = await Admin.findByIdAndUpdate(
       req.params.id,
-      { adminId, adminName, adminEmail, adminPassword },
+      { adminId, adminName, email, password },
       { new: true }
     );
     if (!updated) return res.status(404).json({ message: 'Admin not found' });
@@ -70,4 +86,3 @@ module.exports = {
   updateAdmin,
   deleteAdmin
 };
-//shakira

@@ -1,19 +1,44 @@
 const Customer = require('../schema/Customer');
 
 // Create Customer (Register)
+const bcrypt = require('bcryptjs');
+
+
 const registerCustomer = async (req, res) => {
-  const { customerId, customerName, customerAddress, customerMobileNumber, customerNationalId, customerEmail, customerPassword } = req.body;
+  const {
+    customerId,
+    customerName,
+    customerAddress,
+    customerMobileNumber,
+    customerNationalId,
+    email,
+    password
+  } = req.body;
+
   try {
-    const exists = await Customer.findOne({ customerEmail });
+    const exists = await Customer.findOne({ email });
     if (exists) return res.status(400).json({ message: 'Customer already exists' });
 
-    const customer = new Customer({ customerId, customerName, customerAddress, customerMobileNumber, customerNationalId, customerEmail, customerPassword });
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const customer = new Customer({
+      customerId,
+      customerName,
+      customerAddress,
+      customerMobileNumber,
+      customerNationalId,
+      email,
+      password: hashedPassword
+    });
+
     await customer.save();
     res.status(201).json({ message: 'Customer registered', customer });
   } catch (err) {
     res.status(500).json({ message: 'Error', error: err.message });
   }
 };
+
 
 // Read all Customers
 const getAllCustomers = async (req, res) => {
@@ -38,11 +63,11 @@ const getCustomerById = async (req, res) => {
 
 // Update Customer
 const updateCustomer = async (req, res) => {
-  const { customerId, customerName, customerAddress, customerEmail, customerPassword } = req.body;
+  const { customerId, customerName, customerAddress, email, password } = req.body;
   try {
     const updated = await Customer.findByIdAndUpdate(
       req.params.id,
-      { customerId, customerName, customerAddress, customerEmail, customerPassword },
+      { customerId, customerName, customerAddress, email, password },
       { new: true }
     );
     if (!updated) return res.status(404).json({ message: 'Customer not found' });
