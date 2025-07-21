@@ -1,25 +1,20 @@
-const Admin = require('../schema/Admin');
+import Admin from '../schema/Admin.js';
+import bcrypt from 'bcryptjs';
 
 // Create Admin
-const bcrypt = require('bcryptjs');
-
-
 const registerAdmin = async (req, res) => {
-  const { adminId, adminName, adminEmail, adminPassword } = req.body;
+  const {adminName, email, password } = req.body;
 
   try {
-    const exists = await Admin.findOne({ adminEmail });
+    const exists = await Admin.findOne({ email });
     if (exists) return res.status(400).json({ message: 'Admin already exists' });
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(adminPassword, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new admin with hashed password
     const admin = new Admin({
-      adminId,
       adminName,
-      adminEmail,
-      adminPassword: hashedPassword,
+      email,
+      password: hashedPassword,
     });
 
     await admin.save();
@@ -29,9 +24,7 @@ const registerAdmin = async (req, res) => {
   }
 };
 
-
-
-// Read all Admins
+// Read All Admins
 const getAllAdmins = async (req, res) => {
   try {
     const admins = await Admin.find();
@@ -55,6 +48,7 @@ const getAdminById = async (req, res) => {
 // Update Admin
 const updateAdmin = async (req, res) => {
   const { adminId, adminName, email, password } = req.body;
+
   try {
     const updated = await Admin.findByIdAndUpdate(
       req.params.id,
@@ -79,7 +73,7 @@ const deleteAdmin = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   registerAdmin,
   getAllAdmins,
   getAdminById,

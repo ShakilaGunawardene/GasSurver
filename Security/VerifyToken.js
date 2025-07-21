@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
-const veriyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
 
   if (!token) {
@@ -9,7 +9,7 @@ const veriyToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // Attach user data (id, email, role)
+    req.user = decoded;
     next();
   } catch (error) {
     res.status(401).json({ message: 'Invalid token' });
@@ -18,7 +18,7 @@ const veriyToken = (req, res, next) => {
 
 const protect = (allowedRoles) => {
   return (req, res, next) => {
-    authMiddleware(req, res, () => {
+    verifyToken(req, res, () => {
       if (!allowedRoles.includes(req.user.role)) {
         return res.status(403).json({ message: 'Access denied: Insufficient role' });
       }
@@ -27,4 +27,4 @@ const protect = (allowedRoles) => {
   };
 };
 
-module.exports = { veriyToken, protect };
+export { verifyToken, protect };

@@ -1,4 +1,4 @@
-const Delivery = require('../schema/Dilivery');
+import Delivery from '../schema/Delivery.js'; 
 
 // Create delivery request
 const requestDelivery = async (req, res) => {
@@ -11,7 +11,7 @@ const requestDelivery = async (req, res) => {
       gasCenterId,
       deliveryAddress,
       deliveryDate,
-      paymentMethod: 'Cash on Delivery', // always COD
+      paymentMethod: 'Cash on Delivery', // Always COD
       deliveryStatus: 'Pending'
     });
 
@@ -25,7 +25,9 @@ const requestDelivery = async (req, res) => {
 // Get all deliveries
 const getAllDeliveries = async (req, res) => {
   try {
-    const deliveries = await Delivery.find().populate('customerId').populate('gasCenterId');
+    const deliveries = await Delivery.find()
+      .populate('customerId')
+      .populate('gasCenterId');
     res.json(deliveries);
   } catch (err) {
     res.status(500).json({ message: 'Error', error: err.message });
@@ -35,7 +37,9 @@ const getAllDeliveries = async (req, res) => {
 // Get delivery by ID
 const getDeliveryById = async (req, res) => {
   try {
-    const delivery = await Delivery.findById(req.params.id).populate('customerId').populate('gasCenterId');
+    const delivery = await Delivery.findById(req.params.id)
+      .populate('customerId')
+      .populate('gasCenterId');
     if (!delivery) return res.status(404).json({ message: 'Delivery not found' });
     res.json(delivery);
   } catch (err) {
@@ -71,7 +75,7 @@ const deleteDelivery = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   requestDelivery,
   getAllDeliveries,
   getDeliveryById,

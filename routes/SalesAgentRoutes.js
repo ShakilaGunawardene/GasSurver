@@ -1,12 +1,19 @@
-const express = require('express');
+import express from 'express';
+import { protect } from '../Security/VerifyToken.js';
+import {
+  registerSalesAgent,
+  getAllSalesAgent,
+  getSalesAgentById,
+  updateSalesAgent,
+  deleteSalesAgent
+} from '../controller/SalesAgentController.js';
+
 const router = express.Router();
-const {registerSalesAgent, getAllSalesAgent, getSalesAgentById, updateSalesAgent, deleteSalesAgent} = require("../controller/SalesAgentController");
+// Routes
+router.post('/register', protect(['admin']), registerSalesAgent);
+router.get('/getAllSalesAgent', protect(['admin']), getAllSalesAgent);
+router.get('/getSalesAgentById/:id', getSalesAgentById);
+router.put('/updateSalesAgent/:id', updateSalesAgent);
+router.delete('/deleteSalesAgent/:id', deleteSalesAgent);
 
-//Route:
-router.post('/register',registerSalesAgent);
-router.get('/getAllSalesAgent',getAllSalesAgent);
-router.get('/getSalesAgentById/:id',getSalesAgentById);
-router.put('/updateSalesAgent/:id',updateSalesAgent);
-router.delete('/deleteSalesAgent/:id',deleteSalesAgent);
-
-module.exports = router;
+export default router;

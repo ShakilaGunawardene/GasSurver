@@ -1,12 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const {
+import express from 'express';
+import {
   registerGasStock,
   getAllGasStocks,
   getGasStockById,
   updateGasStock,
   deleteGasStock
-} = require('../controller/GasStockController');
+} from '../controller/GasStockController.js';
+
+const router = express.Router();
 
 router.post('/register', registerGasStock);
 router.get('/getAllGasStocks', getAllGasStocks);
@@ -14,4 +15,4 @@ router.get('/getGasStockById/:id', getGasStockById);
 router.put('/updateGasStock/:id', updateGasStock);
 router.delete('/deleteGasStock/:id', deleteGasStock);
 
-module.exports = router;
+export default router;

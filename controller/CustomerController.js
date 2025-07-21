@@ -1,9 +1,7 @@
-const Customer = require('../schema/Customer');
+import Customer from '../schema/Customer.js';
+import bcrypt from 'bcryptjs';
 
-// Create Customer (Register)
-const bcrypt = require('bcryptjs');
-
-
+// Register Customer
 const registerCustomer = async (req, res) => {
   const {
     customerId,
@@ -19,7 +17,6 @@ const registerCustomer = async (req, res) => {
     const exists = await Customer.findOne({ email });
     if (exists) return res.status(400).json({ message: 'Customer already exists' });
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const customer = new Customer({
@@ -39,8 +36,7 @@ const registerCustomer = async (req, res) => {
   }
 };
 
-
-// Read all Customers
+// Get all Customers
 const getAllCustomers = async (req, res) => {
   try {
     const customers = await Customer.find();
@@ -50,7 +46,7 @@ const getAllCustomers = async (req, res) => {
   }
 };
 
-// Read Customer by ID
+// Get Customer by ID
 const getCustomerById = async (req, res) => {
   try {
     const customer = await Customer.findById(req.params.id);
@@ -64,6 +60,7 @@ const getCustomerById = async (req, res) => {
 // Update Customer
 const updateCustomer = async (req, res) => {
   const { customerId, customerName, customerAddress, email, password } = req.body;
+
   try {
     const updated = await Customer.findByIdAndUpdate(
       req.params.id,
@@ -88,7 +85,7 @@ const deleteCustomer = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   registerCustomer,
   getAllCustomers,
   getCustomerById,

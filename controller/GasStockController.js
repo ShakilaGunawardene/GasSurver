@@ -1,8 +1,17 @@
-const GasStock = require('../schema/GasStock');
+import GasStock from '../schema/GasStock.js';
 
 // Register new gas center
 const registerGasStock = async (req, res) => {
-  const { gasCenterId, gasCenterName, gasBrand, gasType, gasAvailableQty, nextArrivalDate, location } = req.body;
+  const {
+    gasCenterId,
+    gasCenterName,
+    gasBrand,
+    gasType,
+    gasAvailableQty,
+    nextArrivalDate,
+    location
+  } = req.body;
+
   try {
     const newStock = new GasStock({
       gasCenterId,
@@ -13,6 +22,7 @@ const registerGasStock = async (req, res) => {
       nextArrivalDate,
       location
     });
+
     await newStock.save();
     res.status(201).json({ message: 'Gas center registered', gasStock: newStock });
   } catch (err) {
@@ -43,14 +53,25 @@ const getGasStockById = async (req, res) => {
 
 // Update gas center
 const updateGasStock = async (req, res) => {
-  const { gasCenterId, gasCenterName, gasBrand, gasType, gasAvailableQty, nextArrivalDate, location } = req.body;
+  const {
+    gasCenterId,
+    gasCenterName,
+    gasBrand,
+    gasType,
+    gasAvailableQty,
+    nextArrivalDate,
+    location
+  } = req.body;
+
   try {
     const updated = await GasStock.findByIdAndUpdate(
       req.params.id,
       { gasCenterId, gasCenterName, gasBrand, gasType, gasAvailableQty, nextArrivalDate, location },
       { new: true }
     );
+
     if (!updated) return res.status(404).json({ message: 'Gas center not found' });
+
     res.json({ message: 'Gas center updated', gasStock: updated });
   } catch (err) {
     res.status(500).json({ message: 'Error', error: err.message });
@@ -68,7 +89,7 @@ const deleteGasStock = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   registerGasStock,
   getAllGasStocks,
   getGasStockById,
