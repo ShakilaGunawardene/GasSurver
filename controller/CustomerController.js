@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 // Register Customer
 const registerCustomer = async (req, res) => {
   const {
-    customerId,
+
     customerName,
     customerAddress,
     customerMobileNumber,
@@ -20,7 +20,7 @@ const registerCustomer = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const customer = new Customer({
-      customerId,
+      
       customerName,
       customerAddress,
       customerMobileNumber,

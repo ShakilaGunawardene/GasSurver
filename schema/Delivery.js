@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const DeliverySchema = new mongoose.Schema(
   {
-    deliveryId: { type: String },
+    
     customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true },
     gasCenterId: { type: mongoose.Schema.Types.ObjectId, ref: 'GasStock', required: true },
     deliveryAddress: { type: String, required: true },

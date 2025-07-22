@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const GasStockSchema = new mongoose.Schema(
   {
-    gasCenterId: { type: String },
+    
     gasCenterName: { type: String, required: true },
     gasBrand: { type: String, required: true },
     gasType: { type: String, required: true },

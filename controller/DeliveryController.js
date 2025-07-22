@@ -6,7 +6,7 @@ const requestDelivery = async (req, res) => {
 
   try {
     const newDelivery = new Delivery({
-      deliveryId,
+      
       customerId,
       gasCenterId,
       deliveryAddress,

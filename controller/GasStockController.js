@@ -3,7 +3,7 @@ import GasStock from '../schema/GasStock.js';
 // Register new gas center
 const registerGasStock = async (req, res) => {
   const {
-    gasCenterId,
+    
     gasCenterName,
     gasBrand,
     gasType,
@@ -14,7 +14,7 @@ const registerGasStock = async (req, res) => {
 
   try {
     const newStock = new GasStock({
-      gasCenterId,
+      
       gasCenterName,
       gasBrand,
       gasType,
@@ -54,7 +54,7 @@ const getGasStockById = async (req, res) => {
 // Update gas center
 const updateGasStock = async (req, res) => {
   const {
-    gasCenterId,
+    
     gasCenterName,
     gasBrand,
     gasType,
@@ -66,7 +66,7 @@ const updateGasStock = async (req, res) => {
   try {
     const updated = await GasStock.findByIdAndUpdate(
       req.params.id,
-      { gasCenterId, gasCenterName, gasBrand, gasType, gasAvailableQty, nextArrivalDate, location },
+      {  gasCenterName, gasBrand, gasType, gasAvailableQty, nextArrivalDate, location },
       { new: true }
     );
 

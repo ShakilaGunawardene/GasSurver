@@ -4,10 +4,9 @@ import SalesAgent from '../schema/SalesAgent.js';
 // Register SalesAgent
 const registerSalesAgent = async (req, res) => {
   const {
-    salesAgentId,
+    
     salesAgentName,
     salesAgentGasBrandName,
-    salesAgentGasType,
     salesAgentEmail,
     salesAgentPassword
   } = req.body;
@@ -19,10 +18,9 @@ const registerSalesAgent = async (req, res) => {
     const hashedPassword = await bcrypt.hash(salesAgentPassword, 10);
 
     const salesAgent = new SalesAgent({
-      salesAgentId,
+      
       salesAgentName,
       salesAgentGasBrandName,
-      salesAgentGasType,
       salesAgentEmail,
       salesAgentPassword: hashedPassword
     });
@@ -58,10 +56,9 @@ const getSalesAgentById = async (req, res) => {
 // Update SalesAgent
 const updateSalesAgent = async (req, res) => {
   const {
-    salesAgentId,
+    
     salesAgentName,
     salesAgentGasBrandName,
-    salesAgentGasType,
     email,
     password
   } = req.body;
@@ -69,7 +66,7 @@ const updateSalesAgent = async (req, res) => {
   try {
     const updated = await SalesAgent.findByIdAndUpdate(
       req.params.id,
-      { salesAgentId, salesAgentName, salesAgentGasBrandName, salesAgentGasType, email, password },
+      {  salesAgentName, salesAgentGasBrandName, email, password },
       { new: true }
     );
     if (!updated) return res.status(404).json({ message: 'Sales Agents not found' });
